@@ -43,7 +43,7 @@ static std::string getInputAndValidate() {
     }
     return selection;
 }
-void Merchant::printCard() const {
-    printCardDetails(std::cout, "Merchant");
-    printEndOfCardDetails(std::cout);
+void Merchant::printCard(std::ostream& os) const {
+    printCardDetails(os, "Merchant");
+    printEndOfCardDetails(os);
 }

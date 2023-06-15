@@ -12,7 +12,7 @@ void Well::applyEncounter(Player& player) const {
     printWellMessage(true);
 }
 
-void Well::printCard() const {
-    printCardDetails(std::cout, "Well");
-    printEndOfCardDetails(std::cout);
+void Well::printCard(std::ostream& os) const {
+    printCardDetails(os, "Well");
+    printEndOfCardDetails(os);
 }

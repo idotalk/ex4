@@ -16,10 +16,14 @@ public:
 
 
     /* Prints the card info */
-    virtual void printCard() const = 0;
-
+    virtual void printCard(std::ostream& os) const = 0;
     virtual ~Card() = default;
-};
 
+private:
+    friend std::ostream& operator<<(std::ostream& os, const Card& card){
+        card.printCard(os);
+        return os;
+    }
+};
 
 #endif //EX4_Card_H

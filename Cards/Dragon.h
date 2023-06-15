@@ -7,7 +7,7 @@ class Dragon : public BattleCards {
 public:
     Dragon();
     void applyEncounter(Player& player) const override;
-    void printCard() const override;
+    void printCard(std::ostream& os) const override;
 
 };
 

@@ -13,8 +13,8 @@ void Dragon::applyEncounter(Player &player) const {
     }
 }
 
-void Dragon::printCard() const {
-    printCardDetails(std::cout, "Dragon");
-    printMonsterDetails(std::cout,m_force,m_damage,m_loot, true);
-    printEndOfCardDetails(std::cout);
+void Dragon::printCard(std::ostream& os) const {
+    printCardDetails(os, "Dragon");
+    printMonsterDetails(os,m_force,m_damage,m_loot, true);
+    printEndOfCardDetails(os);
 }

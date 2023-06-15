@@ -14,8 +14,8 @@ void Witch::applyEncounter(Player &player) const {
     }
 }
 
-void Witch::printCard() const {
-    printCardDetails(std::cout, "Witch");
-    printMonsterDetails(std::cout,m_force,m_damage,m_loot);
-    printEndOfCardDetails(std::cout);
+void Witch::printCard(std::ostream& os) const {
+    printCardDetails(os, "Witch");
+    printMonsterDetails(os,m_force,m_damage,m_loot);
+    printEndOfCardDetails(os);
 }
