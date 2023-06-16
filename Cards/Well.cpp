@@ -5,6 +5,7 @@ void Well::applyEncounter(Player& player) const {
     bool isNinja = true;
     try {
         const Ninja & ninja = dynamic_cast<Ninja&> (player); // may be need to do something with warrior - check compiling flags later
+        ninja.getHP();
     }
     catch (std::bad_cast&){
         isNinja = false;

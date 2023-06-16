@@ -5,7 +5,7 @@
 
 class DeckFileNotFound : public std::logic_error {
 public:
-    DeckFileNotFound() : std::logic_error("Deck File Error: File not found"){};;
+    DeckFileNotFound() : std::logic_error("Deck File Error: File not found"){};
 };
 
 class DeckFileFormatError: public std::logic_error {

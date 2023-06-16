@@ -1,6 +1,6 @@
 #include "Dragon.h"
 
-Dragon::Dragon() : BattleCards(25,INT_MAX,1000) {}
+Dragon::Dragon() : BattleCards(25,-1,1000) {}
 
 void Dragon::applyEncounter(Player &player) const {
     if (player.getAttackStrength() >= m_force) {
