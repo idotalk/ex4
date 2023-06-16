@@ -1,5 +1,11 @@
 #ifndef MTMCHKIN_H_
 #define MTMCHKIN_H_
+#include <string>
+#include <queue>
+#include "Leaderboard.h"
+#include "Players/Player.h"
+#include "Cards/Card.h"
+#include "utilities.h"
 
 class Mtmchkin{
 
@@ -46,6 +52,17 @@ public:
     *          int - number of rounds played
     */
     int getNumberOfRounds() const;
+    Mtmchkin operator=(Mtmchkin&) = delete;
+    Mtmchkin(Mtmchkin&) = delete;
+    ~Mtmchkin();
+
+private:
+    std::queue<Player*> m_playersQueue;
+    std::queue<const Card*> m_cardsDeck;
+    Leaderboard m_leaderBoard;
+    int m_playersAmount;
+    int m_remainPlayers;
+    int m_roundsPlayed;
 };
 
 

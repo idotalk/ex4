@@ -26,7 +26,7 @@ void Player::levelUp() {
 }
 
 void Player::weak() {
-    if (m_force == 1 ) {
+    if (m_force != 0) {
         m_force --;
     }
 }

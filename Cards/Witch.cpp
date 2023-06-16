@@ -6,11 +6,11 @@ void Witch::applyEncounter(Player &player) const {
     if (player.getAttackStrength() >= m_force) {
         player.levelUp();
         player.addCoins(m_loot);
-        printWinBattle(player.getPlayerName(),"Gremlin");
+        printWinBattle(player.getPlayerName(),"Witch");
     } else {
         player.weak();
         player.damage(m_damage);
-        printLossBattle(player.getPlayerName(),"Gremlin");
+        printLossBattle(player.getPlayerName(),"Witch");
     }
 }
 

@@ -1,10 +1,21 @@
 #include <iostream>
-#include "Exception.h"
-#include "utilities.h"
-#include "./Players/Player.h"
-#include "./Players/Jobs.h"
+#include "Mtmchkin.h"
 int main() {
-    std::string name = "BOL";
-    Player* p = new Ninja(name);
-    printPlayerLeaderBoard(1,*p);
+    /*
+    Mtmchkin game("deck.txt");
+    while(!game.isGameOver() && game.getNumberOfRounds() < 100){
+        game.playRound();
+        game.printLeaderBoard();
+    }
+     */
+    try {
+        Mtmchkin("inputs/badFormat_test.txt");
+    }
+    catch(const DeckFileFormatError& e){
+        if(strcmp(e.what(),"Deck File Error: File format error in line 2")==0) {
+            std::cout << "win";
+        }
+        std::cout << e.what();
+    }
+
 }

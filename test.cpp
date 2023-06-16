@@ -300,7 +300,7 @@ bool badFormatTest()
 {
     const string tmp_file("badFormat_test");
     string input("2\nItay Healer\nPikachu Ninja");
-    string deck("SomeBody Once told me the world is gonna roll me\nWitch\n");
+    string deck("Witch\nSomeBody Once told me the world is gonna roll me\nWitch\n");
     string expectedOutputFilename("notneeded.txt");
     bool flag = false;
     try {
@@ -337,7 +337,6 @@ bool badFormatStartTest()
 // --------------------------------       Main function          ------------------------------
 
 int main(){
-    
 	run_test(cardsPrintsTest,"cardsPrintsTest");
     run_test(playersPrintsTest,"playersPrintsTest");
     run_test(testCard,"Deck creation test");

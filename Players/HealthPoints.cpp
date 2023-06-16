@@ -1,7 +1,7 @@
 #include "HealthPoints.h"
 
 HealthPoints::HealthPoints(const int hp) {
-    if (hp <= 0){
+    if (hp < 0){
         throw HealthPoints::InvalidArgument();
     }
     m_maxHP = hp;
@@ -22,7 +22,7 @@ HealthPoints& HealthPoints::operator-=(const int hp) {
     return (*this += (-hp) );
 }
 HealthPoints& HealthPoints::operator=(const int hp){
-    if (hp <= 0){
+    if (hp < 0){
         throw InvalidArgument();
     }
     m_currentHP = hp;

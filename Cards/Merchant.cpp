@@ -32,11 +32,12 @@ static std::string getInputAndValidate() {
     const std::vector<std::string> validSelections = {"0","1","2"};
     std::vector<std::string>::const_iterator it;
     std::string selection;
-    while (it != validSelections.end()){
+    while (it != validSelections.cend()){
         std::cin >> selection;
         it = std::find(validSelections.cbegin(),validSelections.cend(), selection);
-        if (it == validSelections.end()){
+        if (it == validSelections.cend()){
             printInvalidInput();
+            it = validSelections.cbegin();
         } else {
             break;
         }

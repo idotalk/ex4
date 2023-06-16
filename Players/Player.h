@@ -88,7 +88,7 @@ protected:
     static const int m_startingHP = 100;
     static const int m_startingLevel = 1;
     static const int m_maxLevel = 10;
-    static const int m_startingCoins = 0;
+    static const int m_startingCoins = 10;
     static const int m_startingForce = 5;
 
     // Printing a Player information

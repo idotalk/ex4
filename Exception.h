@@ -3,41 +3,21 @@
 #include <stdexcept>
 #include <string>
 
-class DeckFileNotFound : public std::exception {
+class DeckFileNotFound : public std::logic_error {
 public:
-    DeckFileNotFound() : m_message("Deck File Error: File not found"){};;
-    const char* what() const noexcept override {
-        return m_message.c_str();
-    }
-private:
-    std::string m_message;
+    DeckFileNotFound() : std::logic_error("Deck File Error: File not found"){};;
 };
 
-class DeckFileFormatError: public std::exception {
+class DeckFileFormatError: public std::logic_error {
 public:
-    explicit DeckFileFormatError(int line){
-        m_line = line;
-        m_message="Deck File Error: File format error in line ";
-    }
-    const char* what() const noexcept override {
-        std::string line = std::to_string(m_line);
-        std::string msg = (m_message + line);
-        return msg.c_str();
-    }
-private:
-    std::string m_message;
-    int m_line;
+    explicit DeckFileFormatError(int line) : std::logic_error("Deck File Error: File format error in line "+
+                                                                std::to_string(line)){}
 
 };
 
-class DeckFileInvalidSize : public std::exception {
+class DeckFileInvalidSize : public std::logic_error {
 public:
-    DeckFileInvalidSize() : m_message("Deck File Error: Deck size is invalid"){};
-    const char* what() const noexcept override {
-        return m_message.c_str();
-    }
-private:
-    std::string m_message;
+    DeckFileInvalidSize() : std::logic_error("Deck File Error: Deck size is invalid"){};
 };
 
 #endif // MTM4_EXCEPTION_H
