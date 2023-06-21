@@ -63,6 +63,7 @@ private:
     int m_playersAmount;
     int m_remainPlayers;
     int m_roundsPlayed;
+    static const int m_maxLevel = 10;
 };
 
 

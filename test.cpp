@@ -351,6 +351,7 @@ int main(){
     run_test(roundLimitTest,"Round upper limit test");
     run_test(allTenTest,"All reach lvl 10 test");
     run_test(badPlayerInputTest,"Bad player input test");
+    run_test(merchantInputTest,"merch test");
 
     return 0;
 }

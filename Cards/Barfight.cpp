@@ -2,18 +2,12 @@
 #include "../Players/Warrior.h"
 
 void Barfight::applyEncounter(Player& player) const {
-    bool isWarrior = true;
     try {
-        const Warrior& warrior = dynamic_cast<Warrior&>(player); // may be need to do something with warrior - check compiling flags later
-        warrior.getHP();
+        __attribute__((unused)) const Warrior& warrior = dynamic_cast<Warrior&>(player); // may be need to do something with warrior - check compiling flags later
+        printBarfightMessage(true);
     }
     catch (std::bad_cast& e){
-        isWarrior = false;
-    }
-    if(isWarrior){
-        printBarfightMessage(true);
-    } else {
-        player.damage(10);
+        player.damage(m_barfightCardDamage);
         printBarfightMessage(false);
     }
 }

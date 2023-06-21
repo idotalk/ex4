@@ -1,21 +1,13 @@
 #include <iostream>
 #include "Mtmchkin.h"
 int main() {
-    /*
-    Mtmchkin game("deck.txt");
-    while(!game.isGameOver() && game.getNumberOfRounds() < 100){
-        game.playRound();
-        game.printLeaderBoard();
-    }
-     */
     try {
-        Mtmchkin("inputs/badFormat_test.txt");
-    }
-    catch(const DeckFileFormatError& e){
-        if(strcmp(e.what(),"Deck File Error: File format error in line 2")==0) {
-            std::cout << "win";
+        Mtmchkin game("deck.txt");
+        while (!game.isGameOver() && game.getNumberOfRounds() < 100) {
+            game.playRound();
+            game.printLeaderBoard();
         }
-        std::cout << e.what();
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
     }
-
 }

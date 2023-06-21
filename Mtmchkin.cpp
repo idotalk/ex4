@@ -25,6 +25,12 @@ static bool validateName(std::string& name);
 static bool validateJob(std::string& job);
 static Player* createPlayerByString(const std::string& name,const std::string& job);
 static std::queue<Player*> initializePlayersQueue(int amount);
+static int findFirstChar(const std::string& str);
+static int findLastChar(const std::string& str);
+static void deleteConsecutiveSpaces(std::string& str);
+static std::string trimBoundSpaces(std::string& str);
+static std::string trimInput(std::string& input);
+
 
 Mtmchkin::~Mtmchkin() {
     while(!m_cardsDeck.empty()){
@@ -40,13 +46,13 @@ Mtmchkin::~Mtmchkin() {
     }
 }
 Mtmchkin::Mtmchkin(const std::string &fileName) : m_leaderBoard(6) {
+    printStartGameMessage();
     std::ifstream deckFile(fileName);
     if(!deckFile){
         throw DeckFileNotFound();
     }
     m_cardsDeck= initializeCardsQueue(deckFile);
     m_roundsPlayed = 0;
-    printStartGameMessage();
     m_remainPlayers = teamSizeSelection();
     m_playersAmount = m_remainPlayers;
     Leaderboard gameLeaderboard(m_playersAmount);
@@ -68,7 +74,7 @@ void Mtmchkin::playRound() {
             if (currentPlayer->isKnockedOut()) {
                 m_leaderBoard.updateLoser(currentPlayer);
                 m_remainPlayers--;
-            } else if (currentPlayer->getLevel() == 10) {
+            } else if (currentPlayer->getLevel() == m_maxLevel) {
                 m_leaderBoard.updateWinner(currentPlayer);
                 m_remainPlayers--;
             } else {
@@ -108,19 +114,21 @@ int Mtmchkin::getNumberOfRounds() const {
 
 static std::queue<Player*> initializePlayersQueue(int amount){
     std::string playerDetailsBuffer,name,job;
-    bool valid = false;
     std::queue<Player*> playersQueue;
     for (int i=0; i<amount; i++){
+        bool valid = false;
         printInsertPlayerMessage();
         do{
             std::getline(std::cin,playerDetailsBuffer);
-            if (countSpacesInString(playerDetailsBuffer) == 1) {
+            std::string trimmedInput = trimInput(playerDetailsBuffer);
+            if (countSpacesInString(trimmedInput) == 1) {
                 valid = true;
             } else {
-                std::cout << "Check Input" << std::endl;
+                printInvalidInput();
+                printInsertPlayerMessage();
                 continue;
             }
-            std::istringstream stream(playerDetailsBuffer);
+            std::istringstream stream(trimmedInput);
             std::getline(stream,name,' ');
             if(!validateName(name)){
                 printInvalidName();
@@ -147,10 +155,15 @@ static bool validateJob(std::string& job){
 }
 
 static bool validateName(std::string& name){
+    int maxLengthAllowed = 15, count = 0;
     for(const char c:name){
         if(!std::isalpha(c)){
             return false;
         }
+        count++;
+    }
+    if(count > maxLengthAllowed) {
+        return false;
     }
     return true;
 }
@@ -176,7 +189,7 @@ static int teamSizeSelection(){
             break;
         }
     }
-    return atoi(teamSizeBuffer.c_str());
+    return std::stoi(teamSizeBuffer);
 }
 
 /* Initialize Cards Queue reading from file, in case of insufficient amount of Cards throws relevant exception.
@@ -189,6 +202,7 @@ static std::queue<const Card*> initializeCardsQueue (std::ifstream& deckFile){
                                                       "Dragon","Merchant",
                                                       "Treasure","Well",
                                                       "Barfight","Mana"};
+    const int minimumCardsAmount = 5;
     std::queue<const Card*> cardsDeck;
     int linesCounter = 0;
     std::string buffer;
@@ -202,7 +216,7 @@ static std::queue<const Card*> initializeCardsQueue (std::ifstream& deckFile){
         const Card* newCard = createCardByString(buffer);
         cardsDeck.push(newCard);
     }
-    if (linesCounter < 5){
+    if (linesCounter < minimumCardsAmount){
         while(!cardsDeck.empty()){
             const Card* toDelete = cardsDeck.front();
             cardsDeck.pop();
@@ -269,3 +283,50 @@ static Player* createPlayerByString(const std::string& name,const std::string& j
     }
     return nullptr;
 }
+
+
+static int findFirstChar(const std::string& str){
+    int pos = 0;
+    while (isspace(str[pos])) {
+        pos++;
+    }
+    if(pos == (int)str.length()) {
+        return -1;
+    }
+    return pos;
+}
+static int findLastChar(const std::string& str){
+    int pos = str.length()-1;
+    while (isspace(str[pos])) {
+        pos--;
+    }
+    if(pos == (int)str.length()) {
+        return -1;
+    }
+    return pos;
+}
+static void deleteConsecutiveSpaces(std::string& str){
+    for(int i=str.size() - 1; i >= 0; i--)
+    {
+        if(str[i]==' ' && str[i] == str[i-1]) {
+            str.erase( str.begin() + i );
+        }
+    }
+}
+static std::string trimBoundSpaces(std::string& str){
+    int start = findFirstChar(str);
+    int end = findLastChar(str);
+    if (start == -1 || end == -1) {
+        return str;
+    }
+    std::string trimmedString = str.substr(start,(end-start+1));
+    return trimmedString;
+}
+
+static std::string trimInput(std::string& input){
+    std::string trimBeginEnd = trimBoundSpaces(input);
+    deleteConsecutiveSpaces(trimBeginEnd);
+    return trimBeginEnd;
+}
+
+

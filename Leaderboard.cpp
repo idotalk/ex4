@@ -36,7 +36,7 @@ void Leaderboard::printBoard(const std::queue<Player *> &playersQueue, bool isOv
             printPlayerLeaderBoard(i+1,*playerToPrint);
             i++;
         }
-        for (int j=m_amount -1; j>m_endIndex; j--){
+        for (int j = m_endIndex + 1 ; j<m_amount; j++){
             printPlayerLeaderBoard(j+1,*(m_playersArray[j]));
         }
     }

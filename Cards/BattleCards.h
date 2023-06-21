@@ -5,7 +5,6 @@
 class BattleCards : public Card {
 public:
     BattleCards(int,int,int);
-
     BattleCards() = delete;
     BattleCards(BattleCards&) = delete;
     BattleCards& operator=(const BattleCards&) = delete;

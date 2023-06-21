@@ -4,8 +4,11 @@
 
 
 class Mana : public Card {
+public:
     void applyEncounter(Player& player) const override;
     void printCard(std::ostream& os) const override;
+private:
+    static const int m_manaCardHealing = 10;
 };
 
 
