@@ -18,7 +18,7 @@ public:
      *  */
     explicit Player(const char* name, int maxHP = m_startingHP ,int forcePoints = m_startingForce);
 
-    // D'tor, copy c'tor and assigment operator are set to their default provided by the compiler.
+   
     Player(const Player&) = default;
     virtual ~Player() = default;
     Player& operator=(const Player&) = default;
@@ -75,6 +75,9 @@ public:
     // Returns player level + force values.
     virtual int getAttackStrength() const ;
 
+    // Printing a Player information
+    virtual void printInfo(std::ostream& os) const = 0;
+
 protected:
     // Player Attributes
     std::string m_name;
@@ -91,13 +94,8 @@ protected:
     static const int m_startingCoins = 10;
     static const int m_startingForce = 5;
 
-    // Printing a Player information
-    virtual void printInfo(std::ostream& os) const = 0;
-
-private:
-    friend std::ostream& operator<<(std::ostream& os, const Player& player);
-
 };
+std::ostream& operator<<(std::ostream& os, const Player& player);
 
 
 #endif //MTM4_PLAYER_H

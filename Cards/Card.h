@@ -11,7 +11,7 @@ public:
      * Handling the player's applyEncounter with the card:
      *
      * @param player - The player.
-    */
+     */
     virtual void applyEncounter(Player& player) const = 0;
 
 

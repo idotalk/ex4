@@ -125,7 +125,6 @@ static std::queue<Player*> initializePlayersQueue(int amount){
                 valid = true;
             } else {
                 printInvalidInput();
-                printInsertPlayerMessage();
                 continue;
             }
             std::istringstream stream(trimmedInput);
@@ -184,6 +183,7 @@ static int teamSizeSelection(){
         it = std::find(validTeamSizeSelections.cbegin(),validTeamSizeSelections.cend(), teamSizeBuffer);
         if (it == validTeamSizeSelections.cend()) {
             printInvalidTeamSize();
+            printEnterTeamSizeMessage();
             it = validTeamSizeSelections.cbegin();
         } else {
             break;
@@ -211,6 +211,10 @@ static std::queue<const Card*> initializeCardsQueue (std::ifstream& deckFile){
         linesCounter++;
         it = std::find(validSelections.cbegin(),validSelections.cend(), buffer);
         if (it == validSelections.cend()) {
+            while(!cardsDeck.empty()){
+                delete cardsDeck.front();
+                cardsDeck.pop();
+            }
             throw DeckFileFormatError(linesCounter);
         }
         const Card* newCard = createCardByString(buffer);
@@ -290,23 +294,23 @@ static int findFirstChar(const std::string& str){
     while (isspace(str[pos])) {
         pos++;
     }
-    if(pos == (int)str.length()) {
+    if(pos == static_cast<int>(str.length())) {
         return -1;
     }
     return pos;
 }
 static int findLastChar(const std::string& str){
-    int pos = str.length()-1;
+    int pos = static_cast<int>(str.length()) - 1;
     while (isspace(str[pos])) {
         pos--;
     }
-    if(pos == (int)str.length()) {
+    if(pos == static_cast<int>(str.length())) {
         return -1;
     }
     return pos;
 }
 static void deleteConsecutiveSpaces(std::string& str){
-    for(int i=str.size() - 1; i >= 0; i--)
+    for(int i=static_cast<int>(str.length()) - 1; i >= 0; i--)
     {
         if(str[i]==' ' && str[i] == str[i-1]) {
             str.erase( str.begin() + i );
