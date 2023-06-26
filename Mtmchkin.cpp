@@ -16,7 +16,7 @@
 #include "Players/Healer.h"
 #include "Players/Warrior.h"
 
-
+// Static functions - @see full documentation before each function implementation at the end of this file.
 static Card* createCardByString(const std::string& className);
 static std::queue<const Card*> initializeCardsQueue (std::ifstream& deckFile);
 static int teamSizeSelection();
@@ -30,7 +30,7 @@ static int findLastChar(const std::string& str);
 static void deleteConsecutiveSpaces(std::string& str);
 static std::string trimBoundSpaces(std::string& str);
 static std::string trimInput(std::string& input);
-
+static void cutSpaces(std::string& buffer, std::string& name, std::string& job);
 
 Mtmchkin::~Mtmchkin() {
     while(!m_cardsDeck.empty()){
@@ -127,14 +127,12 @@ static std::queue<Player*> initializePlayersQueue(int amount){
                 printInvalidInput();
                 continue;
             }
-            std::istringstream stream(trimmedInput);
-            std::getline(stream,name,' ');
+            cutSpaces(trimmedInput,name,job);
             if(!validateName(name)){
                 printInvalidName();
                 valid = false;
                 continue;
             }
-            std::getline(stream,job,' ');
             if(!validateJob(job)){
                 printInvalidClass();
                 valid = false;
@@ -209,6 +207,7 @@ static std::queue<const Card*> initializeCardsQueue (std::ifstream& deckFile){
     std::vector<std::string>::const_iterator it;
     while (std::getline(deckFile,buffer)) {
         linesCounter++;
+        buffer = trimInput(buffer);
         it = std::find(validSelections.cbegin(),validSelections.cend(), buffer);
         if (it == validSelections.cend()) {
             while(!cardsDeck.empty()){
@@ -231,7 +230,8 @@ static std::queue<const Card*> initializeCardsQueue (std::ifstream& deckFile){
     return cardsDeck;
 }
 
-/* Creates new card by name.
+/* Card Factory function.
+ * Creates new card by name.
  * @param string name - card type name
  * @return
  *        Card* - pointer to the new card
@@ -272,6 +272,13 @@ static Card* createCardByString(const std::string& className){
     return nullptr;
 }
 
+/* Player Factory function.
+ * Creates new player by name and job.
+ * @param string name - player name.
+ *        string job  - player job
+ * @return
+ *        Player* - pointer to the new player
+ */
 static Player* createPlayerByString(const std::string& name,const std::string& job){
     if(job == "Ninja"){
         Player* ninja = new Ninja(name);
@@ -288,6 +295,8 @@ static Player* createPlayerByString(const std::string& name,const std::string& j
     return nullptr;
 }
 
+
+// String Parsing functions:
 
 static int findFirstChar(const std::string& str){
     int pos = 0;
@@ -327,10 +336,34 @@ static std::string trimBoundSpaces(std::string& str){
     return trimmedString;
 }
 
+/* Cutting all unnecessary spaces in string.
+ * @param input - string to cut spaces from it.
+ *
+ * @return
+ *        new string without unnecessary spaces.
+ */
 static std::string trimInput(std::string& input){
     std::string trimBeginEnd = trimBoundSpaces(input);
     deleteConsecutiveSpaces(trimBeginEnd);
     return trimBeginEnd;
 }
 
+
+/* Divide 2 word string to 2 different string variables
+ * @param
+ *          string buffer - original string to cut.
+ *          string& name  - reference to string in order to store the first word in buffer.
+ *          string& name  - reference to string in order to store the second word in buffer.
+ */
+static void cutSpaces(std::string& buffer, std::string& name, std::string& job){
+    int index = 0;
+    for(const char c : buffer){
+        if(isspace(c)) {
+            break;
+        }
+        index++;
+    }
+    name = buffer.substr(0,index);
+    job = buffer.substr(index+1, buffer.length()-1);
+}
 
